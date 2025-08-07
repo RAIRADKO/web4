@@ -16,7 +16,7 @@ def create_app():
     app.config['MYSQL_HOST'] = 'localhost'
     app.config['MYSQL_USER'] = 'root'  # Ganti dengan username MySQL Anda
     app.config['MYSQL_PASSWORD'] = '' # Ganti dengan password MySQL Anda
-    app.config['MYSQL_DB'] = 'website_kominfo' # Pastikan nama database ini sudah ada
+    app.config['MYSQL_DB'] = 'web_kominfo' # Pastikan nama database ini sudah ada
     app.config['UPLOAD_FOLDER'] = 'static/favicon'
     
     # Membuat folder upload jika belum ada

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 
-admin = Blueprint('admin', __name__)
+admin = Blueprint('admin', __name__, template_folder='templates')
 
 @admin.route('/login', methods=['GET', 'POST'])
 def login():
