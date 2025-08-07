@@ -1,20 +1,46 @@
-from flask import Blueprint, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session
+import mysql.connector
+from werkzeug.security import check_password_hash
 
-# Menghapus 'request' karena tidak lagi digunakan di sini
 admin = Blueprint('admin', __name__, template_folder='templates')
 
-# Fungsi login dihapus dari sini untuk menghindari konflik
+def get_db():
+    """Fungsi helper untuk koneksi ke database MySQL."""
+    return mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='',
+        database='web_kominfo'
+    )
+
+@admin.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password_input = request.form['password']
+
+        conn = get_db()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
+        user = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        if user and check_password_hash(user['password'], password_input):
+            session['user'] = user['username']
+            return redirect(url_for('admin.dashboard'))
+        else:
+            return "Login Gagal. Periksa kembali username dan password Anda.", 401
+    return render_template('admin/login.html')
+
 
 @admin.route('/dashboard')
 def dashboard():
-    # Pemeriksaan sesi tetap dilakukan untuk melindungi rute ini
     if 'user' not in session:
-        # Mengarahkan ke 'main.login' yang sekarang menjadi satu-satunya rute login
-        return redirect(url_for('main.login'))
+        return redirect(url_for('admin.login'))
     return render_template('admin/dashboard.html')
 
 @admin.route('/logout')
 def logout():
     session.pop('user', None)
-    # Mengarahkan ke 'main.login' setelah logout
-    return redirect(url_for('main.login'))
+    return redirect(url_for('admin.login'))
