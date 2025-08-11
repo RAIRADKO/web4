@@ -198,87 +198,26 @@
   </head>
   <body>
     <div class="container mt-4">
-      <h3>Dashboard</h3>
-      <div class="card mt-3">
-        <div class="card-header">
-          <div class="d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Sensor Komentar Berita</h5>
-            <a href="tambah_sensor" class="btn btn-primary btn-sm">Tambahkan Data</a>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="d-flex align-items-center">
-              Show
-              <select
-                class="form-select form-select-sm mx-2"
-                style="width: auto"
-              >
-                <option>10</option>
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
-              </select>
-              entries
-            </div>
-            <div>
-              <input
-                type="search"
-                class="form-control form-control-sm"
-                placeholder="Search..."
-              />
-            </div>
-          </div>
+    <h3>Edit Kata Sensor</h3>
+    <form method="POST">
+    <div class="mb-3">
+        <label>Kata Jelek</label>
+        <input type="text" name="kata_jelek" class="form-control" value="{{ data.kata_jelek }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Ganti Menjadi</label>
+        <input type="text" name="ganti_menjadi" class="form-control" value="{{ data.ganti_menjadi }}" required>
+    </div>
+    <div class="mb-3">
+        <label>Action</label>
+        <select name="action" class="form-select">
+        <option value="sensor" {% if data.action == 'sensor' %}selected{% endif %}>Sensor</option>
+        <option value="tolak" {% if data.action == 'tolak' %}selected{% endif %}>Tolak</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+    </form>
 
-             <div class="table-responsive">
-              <table class="table table-bordered table-striped table-sm">
-                <thead class="table-light">
-                  <tr>
-                    <th>No</th>
-                    <th>Kata Jelek</th>
-                    <th>Ganti Menjadi</th>
-                    <th>Action</th>
-                    <th>Opsi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for row in data %}
-                  <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ row.kata_jelek }}</td>
-                    <td>{{ row.ganti_menjadi }}</td>
-                    <td>{{ row.action }}</td>
-                    <td>
-                      <a href="{{ url_for('admin.edit_sensor', id=row.id) }}" class="btn btn-sm btn-success">Edit</a>
-                      <a href="{{ url_for('admin.delete_sensor', id=row.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <div>Showing 1 to 10 of ... entries</div>
-              <nav>
-                <ul class="pagination pagination-sm mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  <li class="page-item"><a class="page-link" href="#">…</a></li>
-                  <li class="page-item"><a class="page-link" href="#">10</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                  </li>
-        </div>
-      </div>
 
     <!-- Footer -->
        </div>
