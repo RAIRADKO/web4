@@ -21,15 +21,15 @@ def login():
 
         conn = get_db()
         cursor = conn.cursor(dictionary=True)
-        # FIX: Mengganti 'name' dengan 'usernama' sesuai dengan struktur tabel Anda
-        cursor.execute('SELECT * FROM users WHERE usernama = %s', (username,))
+        # FIX: Mengganti 'usernama' dengan 'username'
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         user = cursor.fetchone()
         cursor.close()
         conn.close()
 
         if user and check_password_hash(user['password'], password_input):
             # FIX: Menyesuaikan kunci session dengan nama kolom yang benar
-            session['user'] = user['usernama'] 
+            session['user'] = user['username'] 
             return redirect(url_for('admin.dashboard'))
         else:
             return "Login Gagal. Periksa kembali username dan password Anda.", 401
